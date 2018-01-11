@@ -1,0 +1,5 @@
+dbd
+lib
+configure/O.*
+regexasubApp/Db/O.*
+regexasubApp/src/O.*
