@@ -1,7 +1,11 @@
 #!/usr/bin/make -f
 # See debhelper(7) (uncomment to enable)
 # output every command that modifies files on the build system.
-#DH_VERBOSE = 1
+DH_VERBOSE = 1
+
+# Strip away the suffix of the package version number starting with "-", "+",
+# or "~":
+export SHRLIB_VERSION := $(shell dpkg-parsechangelog --count 1 | grep '^Version:' | sed -r 's/Version:\s*([0-9a-zA-Z.]+:)?([0-9a-zA-Z.]+)([-+~].*)?/\2/')
 
 # see EXAMPLES in dpkg-buildflags(1) and read /usr/share/dpkg/*
 DPKG_EXPORT_BUILDFLAGS = 1
@@ -19,14 +23,8 @@ include /usr/share/dpkg/default.mk
 
 # main packaging script based on dh7 syntax
 %:
-	dh $@  --with autotools-dev
+	dh $@ --with epics -Sepicsmake --parallel
 
-# debmake generated override targets
-# This is example for Cmake (See http://bugs.debian.org/641051 )
-#override_dh_auto_configure:
-#	dh_auto_configure -- \
-#	-DCMAKE_LIBRARY_PATH=$(DEB_HOST_MULTIARCH)
-
-
-
+override_dh_install:
+	dh_install --fail-missing
 

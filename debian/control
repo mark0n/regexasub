@@ -1,22 +1,32 @@
-Source: regex-asub
+Source: regexasub
 Priority: optional
 Maintainer: Konrad Martin <konrad@frib.msu.edu>
-Build-Depends: debhelper (>= 9), autotools-dev
-Standards-Version: 3.9.5
+Build-Depends: debhelper (>= 9),
+               epics-debhelper,
+               epics-dev,
+Standards-Version: 3.9.6
 Section: libs
-Homepage: <insert the upstream URL, if relevant>
-#Vcs-Git: git://anonscm.debian.org/collab-maint/regex-asub.git
-#Vcs-Browser: http://anonscm.debian.org/?p=collab-maint/regex-asub.git;a=summary
+Vcs-Git: https://stash.frib.msu.edu/scm/gts/regexasub.git
+Vcs-Browser: https://stash.frib.msu.edu/projects/GTS/repos/regexasub
 
-Package: regex-asub-dev
+Package: regexasub-dev
 Section: libdevel
 Architecture: any
-Depends: regex-asubBROKEN (= ${binary:Version}), ${misc:Depends}
-Description: <insert up to 60 chars description>
- <insert long description, indented with spaces>
+Depends: libregexasub1.0.0 (= ${binary:Version}), ${misc:Depends},
+         ${shlibs:Depends}, ${epics:Depends}
+Description: Regular Expression aSub Record
+ This EPICS module performs regular expression substitution on a string. It
+ can be used to extract substrings or to rearrange things.
+ .
+ This package provides files need to build an IOC with the regular expression
+ aSub module.
 
-Package: regex-asubBROKEN
+Package: libregexasub1.0.0
 Architecture: any
+Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: <insert up to 60 chars description>
- <insert long description, indented with spaces>
+Description: Regular Expression aSub Record     
+ This EPICS module performs regular expression substitution on a string. It   
+ can be used to extract substrings or to rearrange things.
+ .
+ This package provides the library.
