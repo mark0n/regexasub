@@ -7,8 +7,8 @@ env:
 before_install:
   # Enable the NSLS-II EPICS Debian package repository
   - curl https://epics.nsls2.bnl.gov/debian/repo-key.pub | sudo apt-key add -
-  - echo "deb https://epics.nsls2.bnl.gov/debian/ jessie main contrib" | sudo tee -a /etc/apt/sources.list
-  - echo "deb-src https://epics.nsls2.bnl.gov/debian/ jessie main contrib" | sudo tee -a /etc/apt/sources.list
+  - echo "deb https://epics.nsls2.bnl.gov/debian/ jessie/staging main contrib" | sudo tee -a /etc/apt/sources.list
+  - echo "deb-src https://epics.nsls2.bnl.gov/debian/ jessie/staging main contrib" | sudo tee -a /etc/apt/sources.list
 
   # Install EPICS base
   - sudo apt-get update -qq
