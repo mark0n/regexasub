@@ -1,27 +1,15 @@
+dist: xenial
 language: cpp
-compiler: gcc
+compiler:
+  - gcc
+  - clang
 
 env:
-  - EPICS_BASE=/usr/lib/epics EPICS_HOST_ARCH=linux-x86_64
+ - BASE_BRANCH=7.0 STATIC=shared
+ - BASE_BRANCH=7.0 STATIC=static
+ - BASE_BRANCH=3.15 STATIC=shared
+ - BASE_BRANCH=3.15 STATIC=static
 
-before_install:
-  # Enable the NSLS-II EPICS Debian package repository
-  - curl https://epics.nsls2.bnl.gov/debian/repo-key.pub | sudo apt-key add -
-  - echo "deb https://epics.nsls2.bnl.gov/debian/ jessie/staging main contrib" | sudo tee -a /etc/apt/sources.list
-  - echo "deb-src https://epics.nsls2.bnl.gov/debian/ jessie/staging main contrib" | sudo tee -a /etc/apt/sources.list
+install: ./.ci/install-epics.sh
 
-  # Install EPICS base
-  - sudo apt-get update -qq
-  - sudo apt-get install -y epics-dev
-
-  # Setup configure/RELEASE for the environment
-  - echo "EPICS_BASE=/usr/lib/epics" > configure/RELEASE
-
-install: 
-  # Build the module
-  - make
-
-script:
-  - ls dbd
-  - ls lib/linux-x86_64
-  - ls include
+script: make -j
