@@ -1,15 +1,29 @@
-dist: xenial
 language: cpp
+dist: xenial
+
+# Minimal set of packages needed to compile EPICS Base
+addons:
+  apt:
+    packages:
+    - libreadline6-dev
+    - libncurses5-dev
+    - perl
+
 compiler:
-  - gcc
   - clang
+  - gcc
 
 env:
- - BASE_BRANCH=7.0 STATIC=shared
- - BASE_BRANCH=7.0 STATIC=static
- - BASE_BRANCH=3.15 STATIC=shared
- - BASE_BRANCH=3.15 STATIC=static
+  - BRBASE=3.15 STATIC=NO
+  - BRBASE=3.15 STATIC=YES
+  - BRBASE=7.0  STATIC=NO
+  - BRBASE=7.0  STATIC=YES
 
-install: ./.ci/install-epics.sh
+install:
+  - ./.ci/travis-prepare.sh
 
-script: make -j
+script:
+  - sed -i '/EPICS_BASE=/d' ./configure/RELEASE
+  - echo -e "\nEPICS_BASE=$HOME/.source/epics-base" >> ./configure/RELEASE
+  - cat ./configure/RELEASE
+  - ./.ci/travis-build.sh
